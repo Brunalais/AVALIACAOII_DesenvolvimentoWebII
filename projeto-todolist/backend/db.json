@@ -1,0 +1,66 @@
+{
+  "tarefas": [
+    {
+      "id": 1,
+      "titulo": "Estudar para prova de Web II",
+      "descricao": "Revisar conteúdo sobre Node.js e Express",
+      "concluida": false,
+      "dataCriacao": "2025-05-15T14:30:00.000Z",
+      "prioridade": "Alta"
+    },
+    {
+      "id": 2,
+      "titulo": "Finalizar projeto ToDoList",
+      "descricao": "Implementar o backend e conectar com o frontend",
+      "concluida": false,
+      "dataCriacao": "2025-05-14T10:00:00.000Z",
+      "prioridade": "Alta"
+    },
+    {
+      "id": 3,
+      "titulo": "Comprar material escolar",
+      "descricao": "Cadernos e canetas para o próximo semestre",
+      "concluida": true,
+      "dataCriacao": "2025-05-10T15:45:00.000Z",
+      "prioridade": "Média"
+    },
+    {
+      "id": "afb4",
+      "titulo": "Revisar conteúdo de APIs RESTful",
+      "descricao": "Revisar conteúdo de APIs RESTful",
+      "concluida": false,
+      "dataCriacao": "2025-06-14T00:16:16.066Z",
+      "prioridade": "Normal"
+    },
+    {
+      "id": "1f7d",
+      "titulo": "Criar projeto ToDoList",
+      "descricao": "Criar projeto ToDoList",
+      "concluida": false,
+      "dataCriacao": "2025-06-14T00:17:01.246Z",
+      "prioridade": "Normal"
+    },
+    {
+      "id": "9cb5",
+      "titulo": "Ir para academia",
+      "descricao": "Ir para academia",
+      "concluida": false,
+      "dataCriacao": "2025-06-14T00:17:49.599Z",
+      "prioridade": "Normal"
+    }
+  ],
+  "categorias": [
+    {
+      "id": 1,
+      "nome": "Estudos"
+    },
+    {
+      "id": 2,
+      "nome": "Pessoal"
+    },
+    {
+      "id": 3,
+      "nome": "Trabalho"
+    }
+  ]
+}

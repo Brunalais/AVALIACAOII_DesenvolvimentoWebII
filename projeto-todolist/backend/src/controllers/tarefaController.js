@@ -1,80 +1,88 @@
-const TarefaModel = require('../models/tarefaModel');
+const Tarefa = require('../models/Tarefa');
 
-const TarefaController = {
-  // Criar uma nova tarefa
-  criarTarefa: async (req, res) => {
+// Controlador para gerenciar operações de tarefas
+const tarefaController = {
+  // Listar todas as tarefas
+  async listarTarefas(req, res) {
     try {
-      const { descricao } = req.body;
-      
-      if (!descricao) {
-        return res.status(400).json({ error: 'A descrição da tarefa é obrigatória' });
-      }
-      
-      const id = await TarefaModel.criar(descricao);
-      res.status(201).json({ id, descricao, status: false });
+      const tarefas = await Tarefa.getAll();
+      res.status(200).json(tarefas);
     } catch (error) {
-      console.error('Erro ao criar tarefa:', error);
-      res.status(500).json({ error: 'Erro ao criar tarefa', detalhes: error.message });
+      console.error('Erro ao listar tarefas:', error.message);
+      res.status(500).json({ erro: 'Erro interno ao listar tarefas' });
     }
   },
 
-  // Listar todas as tarefas
-  listarTarefas: async (req, res) => {
+  // Buscar tarefa por ID
+  async buscarTarefa(req, res) {
     try {
-      const tarefas = await TarefaModel.listarTodas();
+      const { id } = req.params;
+      const tarefa = await Tarefa.getById(id);
       
-      // Converte bit (0/1) para boolean
-      const tarefasFormatadas = tarefas.map(t => ({
-        ...t,
-        status: t.status === 1 // Converte bit para boolean
-      }));
+      if (!tarefa) {
+        return res.status(404).json({ erro: 'Tarefa não encontrada' });
+      }
       
-      res.status(200).json(tarefasFormatadas);
+      res.status(200).json(tarefa);
     } catch (error) {
-      console.error('Erro ao listar tarefas:', error);
-      res.status(500).json({ error: 'Erro ao listar tarefas', detalhes: error.message });
+      console.error('Erro ao buscar tarefa:', error.message);
+      res.status(500).json({ erro: 'Erro interno ao buscar tarefa' });
+    }
+  },
+
+  // Criar nova tarefa
+  async criarTarefa(req, res) {
+    try {
+      const { descricao } = req.body;
+      
+      // Validar entrada
+      if (!descricao || descricao.trim() === '') {
+        return res.status(400).json({ erro: 'A descrição da tarefa é obrigatória' });
+      }
+      
+      const novaTarefa = await Tarefa.create({ descricao });
+      res.status(201).json(novaTarefa);
+    } catch (error) {
+      console.error('Erro ao criar tarefa:', error.message);
+      res.status(500).json({ erro: 'Erro interno ao criar tarefa' });
     }
   },
 
   // Atualizar status da tarefa
-  atualizarStatus: async (req, res) => {
+  async atualizarStatus(req, res) {
     try {
       const { id } = req.params;
       const { status } = req.body;
       
+      // Validar entrada
       if (typeof status !== 'boolean') {
-        return res.status(400).json({ error: 'O status deve ser um booleano' });
+        return res.status(400).json({ erro: 'Status deve ser um valor booleano' });
       }
       
-      const sucesso = await TarefaModel.atualizarStatus(id, status);
+      const tarefaAtualizada = await Tarefa.update(id, status);
       
-      if (sucesso) {
-        res.status(200).json({ id, status });
-      } else {
-        res.status(404).json({ error: 'Tarefa não encontrada' });
+      if (!tarefaAtualizada) {
+        return res.status(404).json({ erro: 'Tarefa não encontrada' });
       }
+      
+      res.status(200).json(tarefaAtualizada);
     } catch (error) {
-      console.error('Erro ao atualizar tarefa:', error);
-      res.status(500).json({ error: 'Erro ao atualizar tarefa', detalhes: error.message });
+      console.error('Erro ao atualizar tarefa:', error.message);
+      res.status(500).json({ erro: 'Erro interno ao atualizar tarefa' });
     }
   },
 
-  // Excluir uma tarefa
-  excluirTarefa: async (req, res) => {
+  // Excluir tarefa
+  async excluirTarefa(req, res) {
     try {
       const { id } = req.params;
-      const sucesso = await TarefaModel.excluir(id);
-      
-      if (sucesso) {
-        res.status(200).json({ message: 'Tarefa excluída com sucesso' });
-      } else {
-        res.status(404).json({ error: 'Tarefa não encontrada' });
-      }
+      await Tarefa.delete(id);
+      res.status(200).json({ mensagem: 'Tarefa excluída com sucesso' });
     } catch (error) {
-      console.error('Erro ao excluir tarefa:', error);
-      res.status(500).json({ error: 'Erro ao excluir tarefa', detalhes: error.message });
+      console.error('Erro ao excluir tarefa:', error.message);
+      res.status(500).json({ erro: 'Erro interno ao excluir tarefa' });
     }
   }
 };
 
-module.exports = TarefaController;
+module.exports = tarefaController;

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList - Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ToDoList</h1>
+            <p>Gerencie suas tarefas diárias</p>
+        </header>
+
+        <div class="add-task-container">
+            <input type="text" id="taskInput" placeholder="Digite uma nova tarefa...">
+            <button id="addTaskBtn">
+                <i class="fas fa-plus"></i> Adicionar
+            </button>
+        </div>
+
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">Todas</button>
+            <button class="filter-btn" data-filter="pending">Pendentes</button>
+            <button class="filter-btn" data-filter="completed">Concluídas</button>
+        </div>
+
+        <div id="taskStats" class="task-stats">
+            <span id="totalTasks">Total: 0</span>
+            <span id="pendingTasks">Pendentes: 0</span>
+            <span id="completedTasks">Concluídas: 0</span>
+        </div>
+
+        <div class="task-list-container">
+            <ul id="taskList" class="task-list">
+                <!-- As tarefas serão inseridas aqui via JavaScript -->
+                <li class="task-item loading">Carregando tarefas...</li>
+            </ul>
+        </div>
+
+        <div id="notification" class="notification">
+            <!-- Notificações serão exibidas aqui -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 ToDoList - Projeto Técnico por Bruna Laís</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
